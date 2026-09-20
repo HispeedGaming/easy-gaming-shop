@@ -21,13 +21,28 @@ body{
   color:white;
   display:flex;
 }
-
+/* HAMBURGER */
 /* SIDEBAR */
 .sidebar{
   width:220px;
-  background:#070d1a;
+  background: linear-gradient(
+    180deg,
+    #000000,
+    #0b001a,
+    #14002b,
+    #2a0a55,
+    #6d28d9
+  );
+  box-shadow: 0 0 35px rgba(109,40,217,0.45);
   height:100vh;
   padding:20px;
+
+  position:fixed;
+  top:0;
+  left:0;
+  transform:translateX(-100%);
+  transition:0.3s;
+  z-index:1000;
 }
 
 .sidebar h2{
@@ -59,6 +74,28 @@ body{
   font-weight:bold;
   color:black;
 }
+
+.sidebar.active{
+  transform:translateX(0);
+}
+
+/* 👇 এখানেই বসাবে */
+.close-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+
+  color:white;
+  background:none;
+  border:none;
+  font-size:26px;
+  cursor:pointer;
+
+  text-shadow:
+    0 0 5px rgba(255,255,255,0.8),
+    0 0 10px rgba(255,0,0,0.8);
+}
+
 
 /* SEARCH */
 .search{
@@ -159,7 +196,7 @@ body{
   border-radius:50%;
 }
 
-.active{
+.dot.active{
   background:white;
 }
 
@@ -371,7 +408,7 @@ body{
 @media(max-width:600px){
 
   .sidebar{
-    display:none;
+    display:block;
   }
 
   .container{
@@ -602,6 +639,10 @@ body{
 
 <div class="sidebar">
 
+<button class="close-btn" onclick="toggleMenu()">
+    ✖
+  </button>
+
   <h2>🎮 Gaming Store</h2>
 
   <a href="#">🏠 Home</a>
@@ -616,9 +657,17 @@ body{
 
 <div class="main">
 
-  <div class="header">
-    ⚡ Easy Gaming Shop
-  </div>
+ <!-- 🔧 HEADER এর ভিতরে এটা ADD -->
+<div class="header">
+
+  <span onclick="toggleMenu()" 
+  style="position:absolute;left:10px;top:8px;cursor:pointer;font-size:22px;">
+    ☰
+  </span>
+
+  ⚡ Easy Gaming Shop
+
+</div> 
 
 
   <div class="search">
@@ -774,6 +823,60 @@ body{
 
     </div>
 
+    <!-- eFootball Coin- -->
+
+    <div class="card">
+
+      <img
+        src="https://i.ibb.co/k2sdVM54/efootballcoins.png"
+      >
+
+      <h3>
+        eFootball Coins
+      </h3>
+
+      <button onclick="openOrder()">
+        Order Now
+      </button>
+
+    </div>
+
+    <!-- Mobile Legends- -->
+
+    <div class="card">
+
+      <img
+        src="https://i.ibb.co/DfTjnPYY/googleplaypoints.png"
+      >
+
+      <h3>
+        Mobile Legends
+      </h3>
+
+      <button onclick="openOrder()">
+        Order Now
+      </button>
+
+    </div>
+    
+    <!-- Minecraft- -->
+
+    <div class="card">
+
+      <img
+        src="https://i.ibb.co/DfTjnPYY/googleplaypoints.png"
+      >
+
+      <h3>
+        Minecraft
+      </h3>
+
+      <button onclick="openOrder()">
+        Order Now
+      </button>
+
+    </div>
+
 
   </div>
 
@@ -788,7 +891,7 @@ body{
 
   <a
     class="whatsapp"
-    href="https://wa.me/880 1576-767254"
+    href="https://wa.me/8801576-767254"
   >
 
     <img
@@ -1267,7 +1370,7 @@ function openApp(type){
   else if(type === "messenger"){
 
     window.location.href =
-      "https://m.me/YOUR_PAGE_USERNAME";
+      "https://m.me/61590959553943";
 
   }
 
@@ -1281,9 +1384,12 @@ function openApp(type){
 
 }
 
+function toggleMenu(){
+  document.querySelector(".sidebar").classList.toggle("active");
+}
+
 </script>
 
 
 </body>
 </html>
-
