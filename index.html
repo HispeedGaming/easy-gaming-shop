@@ -332,6 +332,126 @@ body{
     filter 0.25s ease;
 }
 
+/* 🔥 DISCOUNT BADGE */
+.badge{
+  position:absolute;
+  top:15px;
+  left:15px;
+
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  color:white;
+
+  padding:6px 12px;
+  font-size:13px;
+  font-weight:600;
+
+  border-radius:20px;
+  overflow:hidden;
+}
+
+/* shine layer */
+.badge::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.6),
+    transparent
+  );
+
+  animation: shine 2s infinite;
+}
+
+@keyframes shine{
+  0%{ left:-100%; }
+  100%{ left:100%; }
+}
+
+/* 💰 PRICE BOX */
+.price-box{
+  margin:10px 0 12px;
+}
+
+/* ❌ OLD PRICE */
+.old-price{
+  text-decoration:line-through;
+  color:#9ca3af;
+  margin-right:8px;
+  font-size:14px;
+}
+
+/* ✅ NEW PRICE */
+.new-price{
+  color:#22c55e;
+  font-size:20px;
+  font-weight:700;
+
+  text-shadow:0 0 10px rgba(34,197,94,0.5);
+}
+
+/* eFootball Price Table CSS */
+.price-modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  z-index:9999;
+
+  justify-content:center;
+  align-items:center;
+}
+
+.price-content{
+  background:#111827;
+  padding:25px;
+  border-radius:15px;
+  text-align:center;
+  width:90%;
+  max-width:400px;
+}
+
+.price-content button{
+  display:block;
+  width:100%;
+  margin:8px 0;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#1f2937;
+  color:white;
+  cursor:pointer;
+}
+
+.price-content button.selected{
+  background:linear-gradient(135deg,#ef4444,#b91c1c);
+  color:white;
+
+  box-shadow:
+    0 0 10px rgba(239,68,68,0.7),
+    0 0 20px rgba(239,68,68,0.5);
+
+  transform:scale(1.03);
+}
+
+#nextBtn{
+  background:gray;
+  cursor:not-allowed;
+}
+
+#nextBtn.active{
+  background:#22c55e;
+  cursor:pointer;
+}
+
 /* BUTTON HOVER */
 .card button:hover{
   transform:translateY(-2px) scale(1.02);
@@ -719,7 +839,7 @@ body{
 
       <div class="slide">
 
-        <img src="https://images.unsplash.com/photo-1526498460520-4c246339dccb">
+        <img src="https://i.ibb.co/13hYRND/e-Fballcoindisscount.png">
 
         <div class="overlay">
 
@@ -788,21 +908,30 @@ body{
 
     <!-- PLAY POINTS -->
 
-    <div class="card">
+<div class="card">
 
-      <img
-        src="https://i.ibb.co/DfTjnPYY/googleplaypoints.png"
-      >
+  <!-- 🔴 DISCOUNT BADGE -->
+  <div class="badge">-20%</div>
 
-      <h3>
-        Google Play Points
-      </h3>
+  <img
+    src="https://i.ibb.co/DfTjnPYY/googleplaypoints.png"
+  >
 
-      <button onclick="openOrder()">
-        Order Now
-      </button>
+  <h3>
+    Google Play Points
+  </h3>
 
-    </div>
+  <!-- 💰 PRICE -->
+  <div class="price-box">
+    <span class="old-price">৳250</span>
+    <span class="new-price">৳199</span>
+  </div>
+
+  <button onclick="openOrder()">
+    Order Now
+  </button>
+
+</div>
 
 
     <!-- COC PASS -->
@@ -835,7 +964,7 @@ body{
         eFootball Coins
       </h3>
 
-      <button onclick="openOrder()">
+      <button onclick="openEfootball()">
         Order Now
       </button>
 
@@ -846,7 +975,7 @@ body{
     <div class="card">
 
       <img
-        src="https://i.ibb.co/DfTjnPYY/googleplaypoints.png"
+        src="https://i.ibb.co/kgkjw7Q6/mobilelegend.png"
       >
 
       <h3>
@@ -1387,8 +1516,79 @@ function openApp(type){
 function toggleMenu(){
   document.querySelector(".sidebar").classList.toggle("active");
 }
+/* 🔥 NEW CODE নিচে */
+let selectedItem = "";
+
+function openEfootball(){
+  document.getElementById("efootballBox").style.display = "flex";
+}
+
+function closeEfootball(){
+  document.getElementById("efootballBox").style.display = "none";
+}
+
+function choose(btn, item){
+
+  document.querySelectorAll("#options button")
+    .forEach(b => b.classList.remove("selected"));
+
+  btn.classList.add("selected");
+
+  selectedItem = item;
+
+  let next = document.getElementById("nextBtn");
+  next.disabled = false;
+  next.classList.add("active");
+}
+
+function goNext(){
+
+  // 👉 ONLY Order Name fill হবে
+  document.getElementById("orderName").value = selectedItem;
+
+  closeEfootball();
+
+  openOrder();
+}
+
 
 </script>
+
+<div id="efootballBox" class="price-modal">
+
+  <div class="price-content">
+
+    <h2>eFootball Price List</h2>
+
+    <div id="options">
+
+      <button onclick="choose(this,'Iker Casillas - 300৳')">Iker Casillas: ৩০০৳</button>
+
+      <button onclick="choose(this,'130 Coin - 180৳')">130 Coin: ১৮০৳</button>
+
+      <button onclick="choose(this,'300 Coin - 350৳')">300 Coin: ৩৫০৳</button>
+
+      <button onclick="choose(this,'550 Coin - 630৳')">550 Coin: ৬৩০৳</button>
+
+      <button onclick="choose(this,'750 Coin - 840৳')">750 Coin: ৮৪০৳</button>
+
+      <button onclick="choose(this,'1040 Coin - 1200৳')">1040 Coin: ১২০০৳</button>
+
+      <button onclick="choose(this,'2130 Coin - 2300৳')">2130 Coin: ২৩০০৳</button>
+
+    </div>
+
+    <br>
+
+    <button id="nextBtn" onclick="goNext()" disabled>Next ➡</button>
+
+    <br><br>
+
+    <button onclick="closeEfootball()">← Back</button>
+
+  </div>
+
+</div>
 
 
 </body>
